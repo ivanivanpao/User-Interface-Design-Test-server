@@ -1,0 +1,25 @@
+# 科幻風格主題：白天（明亮實驗室）與夜間（深色太空）兩種模式
+# 使用者可從右上角 ⋮ → Settings 切換
+[theme]
+showWidgetBorder = true
+baseRadius = "small"
+
+# 內文用思源黑體，標題用未來感的 Orbitron（中文字會自動改用系統字型）
+font = "Noto Sans TC:https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
+headingFont = "Orbitron:https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"
+
+# 白天模式：淺藍灰底、深青主色
+[theme.light]
+primaryColor = "#0077b6"
+backgroundColor = "#eef4fa"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0b1a2b"
+borderColor = "#b8cde0"
+
+# 夜間模式：深色太空底、霓虹青主色
+[theme.dark]
+primaryColor = "#00e5ff"
+backgroundColor = "#05070f"
+secondaryBackgroundColor = "#0b1424"
+textColor = "#cfefff"
+borderColor = "#1d3a55"
