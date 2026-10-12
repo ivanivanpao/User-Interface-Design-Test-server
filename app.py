@@ -1,4 +1,5 @@
 import streamlit as st
+import psycopg
 
 st.set_page_config(page_title="課程回饋表單", page_icon="🛸")
 
@@ -114,3 +115,37 @@ if submitted:
             col_name.metric("姓名", name.strip())
             col_department.metric("科系", department)
             col_satisfaction.metric("滿意度", satisfaction or "未選擇")
+
+# 最新公告：讀取 Django 後台寫入 Neon PostgreSQL 的公告資料
+st.divider()
+st.header("📢 最新公告")
+
+try:
+    # 連線字串放在 Streamlit Secrets，不寫在程式碼裡
+    conn = psycopg.connect(st.secrets["DATABASE_URL"])
+
+    cursor = conn.cursor()
+
+    # 資料表名稱為 Django 自動產生的「App 名稱_模型名稱」，依建立時間由新到舊排序
+    cursor.execute("""
+        SELECT title, content, created_at
+        FROM announcements_announcement
+        ORDER BY created_at DESC
+    """)
+
+    announcements = cursor.fetchall()
+
+    if announcements:
+        for title, content, created_at in announcements:
+            st.subheader(title)
+            st.write(content)
+            st.caption(f"發布時間：{created_at}")
+    else:
+        st.info("目前沒有公告")
+
+    cursor.close()
+    conn.close()
+
+except Exception as e:
+    st.error("目前無法讀取公告資料")
+    st.exception(e)
